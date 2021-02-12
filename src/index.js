@@ -3,11 +3,21 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
+import { Provider } from "react-redux";
+import rootSaga from './sagas/root_saga';
+import { PersistGate } from "redux-persist/lib/integration/react";
+import { persistor, store, sagaMiddleware } from './store/spotify_store';
+
+sagaMiddleware.run(rootSaga);;
 
 ReactDOM.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>,
+  <React.Fragment>
+    <Provider store={store}>
+      <PersistGate persistor={persistor}>
+        <App />
+      </PersistGate>
+    </Provider>
+  </React.Fragment>,
   document.getElementById('root')
 );
 
